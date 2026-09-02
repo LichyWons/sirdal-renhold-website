@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Priser – Sirdal Renhold AS</title>
+    <meta
+      name="description"
+      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask, flyttehjelp og dødsbo hos Sirdal Renhold. Bruk prisoverslaget for et raskt estimat."
+    />
+    <link rel="canonical" href="https://sirdalrenhold.no/priser.html" />
+    <link rel="stylesheet" href="/assets/css/tokens.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a
+          class="logo"
+          href="/index.html"
+          aria-label="Sirdal Renhold – til forsiden"
+        >
+          <img src="/assets/img/logo.png" alt="" width="600" height="213" />
+        </a>
+        <a
+          class="header-phone"
+          data-business="phone-href"
+          href="tel:+4746215212"
+        >
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"
+            />
+          </svg>
+          <span data-business="phone-display">466 21 52 12</span>
+        </a>
+        <button
+          class="hamburger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="main-nav"
+          data-nav-toggle
+        >
+          <span class="sr-only">Åpne meny</span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+        </button>
+        <nav class="main-nav" id="main-nav" data-nav aria-label="Hovedmeny">
+          <ul>
+            <li><a href="/index.html">Hjem</a></li>
+            <li><a href="/tjenester.html">Tjenester</a></li>
+            <li><a href="/priser.html" aria-current="page">Priser</a></li>
+            <li><a href="/om-oss.html">Om oss</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+            <a class="btn btn-primary nav-cta" href="/priser.html"
+              >Regn ut pris</a
+            >
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="section">
+        <div class="container">
+          <h1>Priser</h1>
+          <p>
+            Svar på noen få spørsmål under for et skreddersydd prisoverslag,
+            eller se den faste prislisten lenger ned på siden.
+          </p>
+
+          <!-- Full price wizard - built entirely by assets/js/calculator.js.
+             Not crawlable by search engines, so the static table below
+             carries all price information for SEO purposes. -->
+          <noscript>
+            <p class="wizard-note">
+              Prisoverslaget krever JavaScript. Se prislisten under, eller
+              <a data-business="phone-href" href="tel:+4746215212">ring oss</a>
+              for et tilbud.
+            </p>
+          </noscript>
+          <section
+            class="wizard"
+            data-wizard
+            aria-label="Prisoverslag steg for steg"
+          ></section>
+
+          <!-- Static price table - always visible, no JavaScript required.
+             This is the only SEO-crawlable carrier of price phrases, so
+             keep it in sync with assets/js/config.js by hand. -->
+          <section id="prisliste">
+            <h2>Prisliste</h2>
+            <table class="price-table">
+              <caption>
+                Priser hos Sirdal Renhold AS
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Tjeneste</th>
+                  <th scope="col">Pris</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Standard vask (hyttevask / daglig vask)</th>
+                  <td>10 kr/m²</td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    Grundig vask (flyttevask / utvask) – inkl. vinduspuss inne
+                    og ute
+                  </th>
+                  <td>70 kr/m²</td>
+                </tr>
+                <tr>
+                  <th scope="row">Byggvask (etter oppussing)</th>
+                  <td>40 kr/m²</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sengetøysett (leie), per person</th>
+                  <td>190 kr</td>
+                </tr>
+                <tr>
+                  <th scope="row">Vask av sengetøy, per stk</th>
+                  <td>25 kr</td>
+                </tr>
+                <tr>
+                  <th scope="row">Starter pack</th>
+                  <td>300 kr</td>
+                </tr>
+                <tr>
+                  <th scope="row">Påfyll</th>
+                  <td>fra 100 kr</td>
+                </tr>
+                <tr>
+                  <th scope="row">Flyttehjelp</th>
+                  <td>1 100 kr/t (10 % rabatt ved samtidig Grundig vask)</td>
+                </tr>
+                <tr>
+                  <th scope="row">Dødsbo</th>
+                  <td>Pris fastsettes etter befaring</td>
+                </tr>
+                <tr>
+                  <th scope="row">Vindusvask</th>
+                  <td><!-- TODO: satser for vindusvask mangler --></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="disclaimer">
+              Anslaget er veiledende og ikke et bindende tilbud. Endelig pris
+              bekreftes etter befaring. Alle priser er
+              <!-- TODO: bekreft med kunde -->
+              eks. mva.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <p class="footer-name" data-business="name">Sirdal Renhold AS</p>
+          <p class="footer-orgnr" data-business="org-nr">Org.nr: 934 822 706</p>
+        </div>
+        <ul class="footer-contact">
+          <li>
+            <a data-business="phone-href" href="tel:+4746215212"
+              ><span data-business="phone-display">466 21 52 12</span></a
+            >
+          </li>
+          <li>
+            <a data-business="email-href" href="mailto:TODO"
+              ><span data-business="email-display">TODO</span></a
+            >
+          </li>
+        </ul>
+        <ul class="footer-links">
+          <li><a href="/personvern.html">Personvern</a></li>
+        </ul>
+        <p class="footer-copy">
+          &copy; <span data-year>2026</span> Sirdal Renhold AS
+        </p>
+      </div>
+    </footer>
+    <div class="sticky-cta" data-sticky-cta>
+      <a class="btn btn-primary" href="/priser.html">Regn ut pris</a>
+      <a
+        class="btn btn-secondary"
+        data-business="phone-href"
+        href="tel:+4746215212"
+        >Ring oss</a
+      >
+    </div>
+
+    <script type="module" src="/assets/js/ui.js"></script>
+    <script type="module">
+      import { initPriceWizard } from '/assets/js/calculator.js';
+      initPriceWizard();
+    </script>
+  </body>
+</html>

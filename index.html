@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sirdal Renhold AS – Vaskehjelp og flyttevask i Sirdal</title>
+    <meta
+      name="description"
+      content="Sirdal Renhold AS tilbyr hyttevask, flyttevask, byggvask og flyttehjelp. Få et raskt prisoverslag og ring oss for en uforpliktende prat."
+    />
+    <link rel="canonical" href="https://sirdalrenhold.no/index.html" />
+    <link rel="stylesheet" href="/assets/css/tokens.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
+
+    <!-- schema.org/LocalBusiness - kept in sync by hand with assets/js/config.js -->
+    <!-- TODO: potwierdzić z klientem - "address" er bevisst utelatt fordi
+       Google-profilen er satt opp uten offentlig adresse. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Sirdal Renhold AS",
+        "telephone": "+4746215212",
+        "url": "https://sirdalrenhold.no",
+        "openingHours": "Mo-Su 07:00-22:00",
+        "areaServed": "Sirdal"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a
+          class="logo"
+          href="/index.html"
+          aria-label="Sirdal Renhold – til forsiden"
+        >
+          <img src="/assets/img/logo.png" alt="" width="600" height="213" />
+        </a>
+        <a
+          class="header-phone"
+          data-business="phone-href"
+          href="tel:+4746215212"
+        >
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"
+            />
+          </svg>
+          <span data-business="phone-display">466 21 52 12</span>
+        </a>
+        <button
+          class="hamburger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="main-nav"
+          data-nav-toggle
+        >
+          <span class="sr-only">Åpne meny</span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+          <span class="hamburger-bar" aria-hidden="true"></span>
+        </button>
+        <nav class="main-nav" id="main-nav" data-nav aria-label="Hovedmeny">
+          <ul>
+            <li><a href="/index.html" aria-current="page">Hjem</a></li>
+            <li><a href="/tjenester.html">Tjenester</a></li>
+            <li><a href="/priser.html">Priser</a></li>
+            <li><a href="/om-oss.html">Om oss</a></li>
+            <li><a href="/kontakt.html">Kontakt</a></li>
+            <a class="btn btn-primary nav-cta" href="/priser.html"
+              >Regn ut pris</a
+            >
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 2. Hero - single background image, no video. Deliberately not
+         full-height so the trust bar peeks in below the fold. -->
+      <section
+        class="hero"
+        data-hero
+        style="background-image: url('/assets/img/hero-placeholder.svg')"
+      >
+        <div class="container hero-content">
+          <h1>Rent og ryddig, uten at du løfter en finger</h1>
+          <p class="hero-subtitle">
+            <!-- TODO: én setnings undertittel om Sirdal Renholds tjenester -->
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/priser.html">Regn ut pris</a>
+            <a
+              class="btn btn-secondary"
+              data-business="phone-href"
+              href="tel:+4746215212"
+              >Ring oss</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Trust bar -->
+      <section class="trust-bar">
+        <div class="container">
+          <span class="trust-bar-item">★ 4,8 på Google</span>
+          <span class="trust-bar-item">Miljøvennlig</span>
+          <span class="trust-bar-item">Fornøydgaranti</span>
+        </div>
+      </section>
+
+      <!-- 4. Tjenester - exactly three cards + link to all services -->
+      <section class="section" id="tjenester" data-animate>
+        <div class="container">
+          <h2>Tjenester</h2>
+          <div class="service-grid">
+            <article class="service-card">
+              <img
+                src="/assets/img/service-hyttevask.svg"
+                alt="Hyttevask"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+              <div class="service-card-body">
+                <h3>Hyttevask</h3>
+                <p class="service-card-price">Fra 10 kr/m²</p>
+                <a class="btn btn-secondary" href="/tjenester/hyttevask.html"
+                  >Les mer</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img
+                src="/assets/img/service-flyttevask.svg"
+                alt="Flyttevask"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+              <div class="service-card-body">
+                <h3>Flyttevask</h3>
+                <p class="service-card-price">70 kr/m²</p>
+                <a class="btn btn-secondary" href="/tjenester/flyttevask.html"
+                  >Les mer</a
+                >
+              </div>
+            </article>
+            <article class="service-card">
+              <img
+                src="/assets/img/service-generic.svg"
+                alt="Byggvask, vindusvask og flyttehjelp"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+              <div class="service-card-body">
+                <h3>Byggvask, vindusvask og flyttehjelp</h3>
+                <p class="service-card-price">Fra 40 kr/m²</p>
+                <a class="btn btn-secondary" href="/tjenester.html">Les mer</a>
+              </div>
+            </article>
+          </div>
+          <p><a href="/tjenester.html">Alle tjenester</a></p>
+        </div>
+      </section>
+
+      <!-- 5. Short two-slider calculator, links onward to the full wizard -->
+      <section class="section section-alt" id="kalkulator" data-animate>
+        <div class="container">
+          <h2>Få et raskt prisoverslag</h2>
+          <p>
+            Juster areal og velg type vask for å se et estimat med en gang. Det
+            fulle prisoverslaget med alle tjenester finner du på prissiden.
+          </p>
+          <div class="mini-calc-widget" data-mini-calc>
+            <div class="mini-calc-field">
+              <label for="mini-calc-area"
+                >Areal:
+                <output for="mini-calc-area" data-mini-calc-area-value
+                  >80</output
+                >
+                m²</label
+              >
+              <input
+                type="range"
+                id="mini-calc-area"
+                min="20"
+                max="300"
+                step="1"
+                value="80"
+                data-mini-calc-area
+              />
+            </div>
+            <div class="mini-calc-field">
+              <span class="mini-calc-label">Type vask</span>
+              <div
+                class="mini-calc-types"
+                role="radiogroup"
+                aria-label="Type vask"
+              >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="mini-calc-type"
+                    value="standard"
+                    checked
+                    data-mini-calc-type
+                  />
+                  Standard</label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="mini-calc-type"
+                    value="grundig"
+                    data-mini-calc-type
+                  />
+                  Grundig</label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="mini-calc-type"
+                    value="byggvask"
+                    data-mini-calc-type
+                  />
+                  Byggvask</label
+                >
+              </div>
+            </div>
+            <p class="mini-calc-result">
+              Ca. <strong data-mini-calc-result>800 kr</strong>
+            </p>
+            <p class="disclaimer">
+              Anslaget er veiledende og ikke et bindende tilbud. Endelig pris
+              bekreftes etter befaring.
+            </p>
+            <a class="btn btn-primary" href="/priser.html"
+              >Se fullt prisoverslag</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Google reviews - TODO: faza 3, hydrated by assets/js/reviews.js -->
+      <section class="section" id="anmeldelser" data-animate>
+        <div class="container">
+          <h2>Hva sier kundene våre?</h2>
+          <div data-reviews data-place-id="ChIJqbmZXV6hOUYR3ZE7eQfNtyY"></div>
+        </div>
+      </section>
+
+      <!-- 7. Om oss -->
+      <section class="section section-alt" id="om-oss" data-animate>
+        <div class="container">
+          <h2>Om oss</h2>
+          <p>
+            <!-- TODO: kort avsnitt om Sirdal Renhold - historie, verdier, hvorfor velge oss -->
+          </p>
+          <a href="/om-oss.html">Les mer om oss</a>
+        </div>
+      </section>
+
+      <!-- 8. Contact CTA - no form on the homepage -->
+      <section class="section" id="kontakt-cta" data-animate>
+        <div class="container">
+          <h2>Klar for et renere hjem?</h2>
+          <p>Ta kontakt så finner vi en løsning som passer deg.</p>
+          <a class="btn btn-primary" href="/kontakt.html">Kontakt oss</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- 9. Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <p class="footer-name" data-business="name">Sirdal Renhold AS</p>
+          <p class="footer-orgnr" data-business="org-nr">Org.nr: 934 822 706</p>
+        </div>
+        <ul class="footer-contact">
+          <li>
+            <a data-business="phone-href" href="tel:+4746215212"
+              ><span data-business="phone-display">466 21 52 12</span></a
+            >
+          </li>
+          <li>
+            <a data-business="email-href" href="mailto:TODO"
+              ><span data-business="email-display">TODO</span></a
+            >
+          </li>
+        </ul>
+        <ul class="footer-links">
+          <li><a href="/personvern.html">Personvern</a></li>
+        </ul>
+        <p class="footer-copy">
+          &copy; <span data-year>2026</span> Sirdal Renhold AS
+        </p>
+      </div>
+    </footer>
+    <div class="sticky-cta" data-sticky-cta>
+      <a class="btn btn-primary" href="/priser.html">Regn ut pris</a>
+      <a
+        class="btn btn-secondary"
+        data-business="phone-href"
+        href="tel:+4746215212"
+        >Ring oss</a
+      >
+    </div>
+
+    <script type="module" src="/assets/js/ui.js"></script>
+    <script type="module">
+      import { initMiniCalculator } from '/assets/js/calculator.js';
+      import { initReviews } from '/assets/js/reviews.js';
+      initMiniCalculator();
+      initReviews();
+    </script>
+  </body>
+</html>

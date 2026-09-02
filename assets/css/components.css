@@ -1,0 +1,1042 @@
+/* Component styles: header, hero, cards, calculator/wizard, reviews,
+   footer and buttons. Mobile-first; see breakpoints at the bottom of
+   each block.
+
+   Weight discipline: 600 is the heaviest weight used anywhere. Emphasis
+   comes from scale, colour and space — when every label is 700, nothing
+   reads as emphasised. */
+
+/* Buttons ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  font-weight: var(--weight-semibold);
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.btn-primary {
+  background: var(--cta-bg);
+  color: var(--cta-text);
+}
+
+.btn-primary:hover {
+  background: var(--cta-bg-hover);
+  color: var(--cta-text);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--brand-600);
+  border-color: var(--brand-600);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-alt);
+  color: var(--brand-900);
+}
+
+/* On the hero's dark overlay the outlined button needs white borders. */
+.hero .btn-secondary {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.hero .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.btn-tertiary {
+  background: transparent;
+  color: var(--brand-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding-inline: var(--space-2);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Header --------------------------------------------------------------- */
+/* Expected DOM order inside .header-inner:
+   .logo → .header-phone → .hamburger → .main-nav
+   One layout mechanism only: gap plus a single auto margin. Mixing
+   space-between with per-item auto margins produced the uneven spacing
+   in the previous build.
+
+   position: sticky silently stops working if any ancestor of
+   .site-header has overflow set to hidden, scroll or auto. If the bar
+   still scrolls away, look for an overflow-x: hidden added to html,
+   body or a page wrapper to suppress horizontal scrolling — replace it
+   with overflow-x: clip, which does not break sticky. */
+
+/* Light header. The logo is a colour mark built for light backgrounds —
+   on navy its own navy lettering disappears. A hairline separates the
+   bar from white page content; .is-scrolled deepens it once the page
+   moves, so the header reads as a layer above the content. */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  /* Fallback matters: if --z-header is missing the declaration is
+     invalid, z-index falls back to auto and the bar sinks behind the
+     page content, showing through only where content is transparent. */
+  z-index: var(--z-header, 100);
+  isolation: isolate;
+  background: var(--surface);
+  color: var(--ink-900);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.2s ease;
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 1px 12px rgba(25, 28, 36, 0.07);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 34px;
+  width: auto;
+}
+
+@media (min-width: 45rem) {
+  .logo img {
+    height: 42px;
+  }
+}
+
+.header-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-900);
+  text-decoration: none;
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.header-phone:hover {
+  color: var(--brand-600);
+}
+
+/* Cyan is fine on an icon — it carries no text and no meaning on its own. */
+.header-phone .icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--brand-600);
+  flex-shrink: 0;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  margin-right: calc(var(--space-2) * -1);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  margin-inline: auto;
+  background: var(--ink-900);
+  border-radius: 1px;
+}
+
+/* Mobile: nav wraps onto its own full-width row and collapses. */
+.main-nav {
+  flex-basis: 100%;
+  display: none;
+  border-top: 1px solid var(--border);
+}
+
+.main-nav.is-open {
+  display: block;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.main-nav li + li {
+  margin-top: 0;
+}
+
+.main-nav a {
+  color: var(--ink-700);
+  text-decoration: none;
+  display: block;
+  padding: var(--space-3) 0;
+}
+
+.main-nav a:hover {
+  color: var(--brand-600);
+}
+
+/* Current page is marked with weight and a cyan underline rather than
+   colour alone, so the state survives for colour-blind users. */
+.main-nav a[aria-current='page'] {
+  color: var(--ink-900);
+  font-weight: var(--weight-medium);
+  box-shadow: inset 0 -3px 0 var(--brand-accent);
+}
+
+.nav-cta {
+  margin-top: var(--space-3);
+}
+
+/* .main-nav a above (color/display/padding) is more specific than the
+   plain .btn/.btn-primary classes and would otherwise flatten the CTA
+   to a bare text link — restore the button look explicitly. */
+.main-nav a.nav-cta {
+  display: inline-flex;
+  color: var(--cta-text);
+  padding: var(--space-3) var(--space-5);
+}
+
+.main-nav a.nav-cta:hover {
+  color: var(--cta-text);
+}
+
+@media (min-width: 45rem) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: var(--space-5);
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .logo {
+    margin-right: var(--space-6);
+  }
+
+  .main-nav {
+    flex-basis: auto;
+    display: block;
+    margin-right: auto;
+    border-top: none;
+  }
+
+  .main-nav ul {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: var(--space-5);
+  }
+
+  .main-nav a {
+    padding: var(--space-2) 0;
+  }
+
+  .nav-cta {
+    margin-top: 0;
+  }
+}
+
+/* Hero ------------------------------------------------------------------ */
+/* Height is 61.8vh — the golden section of the viewport. This is the
+   deliberate reason the next section stays visible on load. */
+
+.hero {
+  position: relative;
+  min-height: 61.8vh;
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(25, 28, 36, 0.25) 0%,
+    rgba(33, 44, 120, 0.82) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  padding-block: var(--space-6) var(--space-6);
+  max-width: 40rem;
+}
+
+.hero h1,
+.hero .display {
+  color: #fff;
+  font-size: var(--fs-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-tight);
+  letter-spacing: var(--tracking-display);
+  margin-bottom: var(--space-4);
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  max-width: 32rem;
+  margin-bottom: var(--space-5);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Trust bar --------------------------------------------------------------- */
+/* Cyan behind navy text is 5.6:1 — the one place the accent carries text. */
+
+.trust-bar {
+  background: var(--brand-accent);
+  color: var(--brand-900);
+}
+
+.trust-bar .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-3);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-xs);
+  text-align: center;
+}
+
+.trust-bar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Service cards ------------------------------------------------------------- */
+/* Border, no drop shadow. Identical soft shadows under every card is the
+   single most template-looking device in a generated layout. */
+
+.service-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+}
+
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.18s ease;
+}
+
+.service-card:hover {
+  border-color: var(--brand-600);
+}
+
+.service-card img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+}
+
+.service-card-body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.service-card-body h3 {
+  margin: 0;
+}
+
+.service-card-price {
+  color: var(--text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.service-card-price strong {
+  color: var(--ink-900);
+  font-weight: var(--weight-semibold);
+}
+
+.service-card-body .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Wizard option cards ------------------------------------------------------ */
+
+.wizard-options {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 35rem) {
+  .wizard-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.option-card:hover {
+  border-color: var(--ink-300);
+}
+
+.option-card:has(input:checked) {
+  border-color: var(--brand-600);
+  background: var(--surface-alt);
+}
+
+.variant-cards {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 40rem) {
+  .variant-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+.variant-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.variant-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.variant-card.is-selected,
+.variant-card:has(input:checked) {
+  border-color: var(--brand-600);
+  background: var(--surface-alt);
+}
+
+.variant-name {
+  font-weight: var(--weight-semibold);
+  color: var(--ink-900);
+}
+
+.variant-desc {
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+}
+
+.variant-price {
+  font-weight: var(--weight-semibold);
+  color: var(--ink-900);
+  font-size: var(--fs-lg);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Recommended state is carried by the badge, not by a cyan border —
+   cyan on white is 2.2:1 and reads as no border at all. */
+.variant-card.is-recommended {
+  border-color: var(--brand-900);
+}
+
+.badge {
+  position: absolute;
+  top: calc(var(--space-3) * -1);
+  right: var(--space-3);
+  background: var(--brand-900);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: var(--weight-semibold);
+  padding: 3px var(--space-3);
+  border-radius: 999px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  margin-right: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.chip:has(input:checked) {
+  border-color: var(--brand-600);
+  background: var(--surface-alt);
+}
+
+/* Mini calculator (index.html) ------------------------------------------------ */
+
+.mini-calc-widget {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  max-width: 30rem;
+}
+
+.mini-calc-field {
+  margin-bottom: var(--space-4);
+}
+
+.mini-calc-field label {
+  display: block;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2);
+}
+
+.mini-calc-types {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mini-calc-result {
+  font-size: var(--fs-xl);
+  font-weight: var(--weight-medium);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-heading);
+}
+
+input[type='range'] {
+  width: 100%;
+  accent-color: var(--brand-600);
+  height: 24px;
+}
+
+/* Wizard (priser.html) ---------------------------------------------------------- */
+
+.wizard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 40rem) {
+  .wizard {
+    padding: var(--space-5);
+  }
+}
+
+.wizard-progress {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.wizard-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+}
+
+.wizard-progress-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--brand-600);
+  transition: width 0.3s var(--motion-ease);
+}
+
+.wizard-sum {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.wizard-sum strong {
+  font-size: var(--fs-md);
+  font-weight: var(--weight-semibold);
+  color: var(--ink-900);
+}
+
+.wizard-field {
+  margin-bottom: var(--space-5);
+}
+
+.wizard-field label {
+  display: block;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2);
+}
+
+.wizard-fieldset {
+  border: none;
+  padding: 0;
+  margin: var(--space-3) 0;
+}
+
+.wizard-fieldset legend {
+  font-weight: var(--weight-medium);
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.wizard-note {
+  background: var(--surface-alt);
+  border-left: 3px solid var(--brand-accent);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  margin-bottom: var(--space-4);
+}
+
+.wizard-hint {
+  color: var(--danger);
+  font-size: var(--fs-xs);
+  margin-bottom: var(--space-3);
+}
+
+.wizard-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  cursor: pointer;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.checkbox-field input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.summary-lines {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.summary-lines li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  margin-top: 0;
+  color: var(--text-secondary);
+}
+
+.summary-lines li > span:last-child {
+  color: var(--ink-900);
+  white-space: nowrap;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--fs-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-heading);
+  margin-bottom: var(--space-3);
+}
+
+.disclaimer {
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* Forms ------------------------------------------------------------------------ */
+
+.form-field {
+  margin-bottom: var(--space-4);
+}
+
+.form-field label {
+  display: block;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-2);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select,
+.wizard-field input,
+.wizard-field select {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  transition: border-color 0.18s ease;
+}
+
+.form-field input:hover,
+.form-field textarea:hover,
+.form-field select:hover {
+  border-color: var(--ink-300);
+}
+
+.form-field input[aria-invalid='true'],
+.form-field textarea[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+/* Price table (priser.html static fallback) ------------------------------------- */
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-4);
+}
+
+.price-table caption {
+  text-align: left;
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-3);
+  color: var(--ink-900);
+}
+
+.price-table th,
+.price-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-3) var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.price-table th {
+  color: var(--text-secondary);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-xs);
+}
+
+.price-table td:last-child,
+.price-table th:last-child {
+  text-align: right;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+/* Reviews ------------------------------------------------------------------------ */
+/* Stars are amber, not cyan. Cyan sits at 2.2:1 on white — invisible in
+   daylight on a phone, which is where most of this traffic is. */
+
+.reviews-summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.reviews-rating {
+  font-size: var(--fs-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-900);
+  letter-spacing: var(--tracking-heading);
+}
+
+.reviews-stars,
+.review-stars {
+  color: var(--star);
+  letter-spacing: 1px;
+}
+
+.reviews-count {
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+}
+
+.reviews-slider {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+  padding: 0 0 var(--space-3);
+  margin: 0;
+  scrollbar-width: thin;
+}
+
+.review-card {
+  scroll-snap-align: start;
+  flex: 0 0 min(17rem, 82%);
+  background: var(--surface-alt);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  margin-top: 0;
+}
+
+.review-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.review-avatar {
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.review-author {
+  font-weight: var(--weight-medium);
+  color: var(--ink-900);
+  font-size: var(--fs-xs);
+}
+
+.review-stars {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+.review-text {
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.reviews-loading {
+  color: var(--text-secondary);
+}
+
+/* FAQ ------------------------------------------------------------------------------ */
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4) 0;
+}
+
+.faq-item summary {
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  color: var(--ink-900);
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  float: right;
+  color: var(--brand-600);
+  font-weight: var(--weight-regular);
+}
+
+.faq-item[open] summary::after {
+  content: '–';
+}
+
+.faq-item p {
+  margin-top: var(--space-3);
+  margin-bottom: 0;
+  color: var(--text-secondary);
+}
+
+/* Footer --------------------------------------------------------------------------- */
+
+.site-footer {
+  background: var(--brand-900);
+  color: rgba(255, 255, 255, 0.82);
+  padding-block: var(--space-6);
+  margin-top: var(--space-7);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.footer-inner a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-inner a:hover {
+  color: var(--brand-accent);
+  text-decoration: underline;
+}
+
+.footer-contact,
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer-contact li,
+.footer-links li {
+  margin-top: 0;
+}
+
+.footer-name {
+  font-weight: var(--weight-medium);
+  color: #fff;
+  margin: 0 0 var(--space-1);
+}
+
+.footer-orgnr,
+.footer-copy {
+  color: rgba(255, 255, 255, 0.62);
+  margin: 0;
+  font-size: var(--fs-xs);
+}
+
+@media (min-width: 45rem) {
+  .footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+}
+
+/* Sticky mobile CTA bar --------------------------------------------------------------- */
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky-cta, 90);
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  box-shadow: var(--shadow-lifted);
+  transform: translateY(110%);
+  transition: transform 0.3s var(--motion-ease);
+}
+
+.sticky-cta .btn {
+  flex: 1;
+}
+
+.sticky-cta.is-visible {
+  transform: translateY(0);
+}
+
+@media (min-width: 60rem) {
+  .sticky-cta {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta,
+  .wizard-progress-bar > span {
+    transition: none;
+  }
+}

@@ -1,0 +1,269 @@
+/* Base styles: reset, typography, layout primitives and accessibility
+   helpers shared by every page. Mobile-first — unadorned rules target
+   small screens, larger breakpoints are added on top. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--fs-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-base);
+  color: var(--text-primary);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings ---------------------------------------------------------- */
+/* Near-black, not brand navy. Weight stays at 500 — at these sizes,
+   presence comes from scale and whitespace rather than bold weight. */
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text-heading);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-tight);
+  letter-spacing: var(--tracking-heading);
+  text-wrap: balance;
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: var(--fs-2xl);
+}
+
+h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-4);
+}
+
+h3 {
+  font-size: var(--fs-md);
+  line-height: var(--line-snug);
+  letter-spacing: 0;
+  margin-bottom: var(--space-3);
+}
+
+h4 {
+  font-size: var(--fs-base);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-snug);
+  letter-spacing: 0;
+  margin-bottom: var(--space-2);
+}
+
+/* Hero headline. Larger, tighter tracking, capped at two lines on
+   phones. Only ever one per page. */
+.display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--text-heading);
+  margin: 0 0 var(--space-4);
+}
+
+.lead {
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-width: var(--measure);
+  margin: 0 0 var(--space-5);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+small,
+.text-sm {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--brand-900);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul,
+ol {
+  padding-left: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+li + li {
+  margin-top: var(--space-2);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Layout primitives ------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: var(--space-5);
+  }
+}
+
+/* Section rhythm. Vertical padding scales with viewport but stays on
+   the Fibonacci steps at both ends. */
+.section {
+  padding-block: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    padding-block: var(--space-7);
+  }
+}
+
+/* Section separation — the previous build ran every section on white
+   with no divider, so they bled into one another. Two devices, used
+   alternately rather than together: a tinted surface, or a hairline. */
+
+.section-alt {
+  background: var(--surface-alt);
+}
+
+.section--ruled + .section--ruled {
+  border-top: 1px solid var(--rule);
+}
+
+/* A single cyan hairline marks major transitions only — the accent is
+   too low-contrast for text but works as a 3px structural mark. */
+.section--accent {
+  border-top: 3px solid var(--brand-accent);
+}
+
+/* φ split for two-column blocks: 38.2 / 61.8 rather than an even half. */
+.split {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 56rem) {
+  .split {
+    grid-template-columns: var(--split-minor) 1fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .split--reverse {
+    grid-template-columns: 1fr var(--split-minor);
+  }
+}
+
+main {
+  display: block;
+}
+
+/* Accessibility helpers ---------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  background: var(--brand-900);
+  color: #fff;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* Every interactive element gets a visible, consistent focus ring. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Scroll-triggered animation hook (see assets/js/ui.js).
+   Transform-only motion, so layout space is never affected (CLS). */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(13px);
+  transition:
+    opacity var(--motion-duration) var(--motion-ease),
+    transform var(--motion-duration) var(--motion-ease);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  * {
+    scroll-behavior: auto !important;
+  }
+}

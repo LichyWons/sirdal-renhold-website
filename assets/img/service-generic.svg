@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="Andre tjenester placeholder image">
+  <!-- TODO: erstatt med ekte foto (f.eks. byggvask eller vindusvask) -->
+  <rect width="400" height="300" fill="#01BDF2"/>
+  <text x="200" y="155" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#212C78" text-anchor="middle" opacity="0.8">TODO: flere tjenester</text>
+</svg>

@@ -1,0 +1,87 @@
+/* Design tokens — Sirdal Renhold
+   Type scale steps by √φ (1.272), so every second step is exactly the
+   golden ratio. Spacing follows Fibonacci, which converges on φ. */
+
+:root {
+  /* Brand ---------------------------------------------------------- */
+  --brand-900: #212c78; /* header, footer, CTA hover */
+  --brand-600: #3345cc; /* CTA, links, active slider */
+  --brand-accent: #01bdf2; /* accents only — 2.2:1 on white */
+
+  /* Ink — headings are near-black, not navy. Three stacked layers of
+     brand blue (logo, header, headings) flattened the hierarchy. */
+  --ink-900: #191c24;
+  --ink-700: #2e323c;
+  --ink-500: #5c6270;
+  --ink-300: #8a909e;
+
+  --text-primary: var(--ink-700);
+  --text-heading: var(--ink-900);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-300);
+
+  /* Surfaces ------------------------------------------------------- */
+  --surface: #ffffff;
+  --surface-alt: #f4f7fb;
+  --surface-ink: var(--brand-900);
+
+  --border: #e4e9f0;
+  --rule: #dde3ec;
+
+  /* Roles ---------------------------------------------------------- */
+  --link: var(--brand-600);
+  --cta-bg: var(--brand-600);
+  --cta-bg-hover: var(--brand-900);
+  --cta-text: #ffffff;
+  --danger: #b3261e; /* form/validation errors */
+  --star: #c8912e; /* review ratings — amber, not cyan (2.2:1 disappears) */
+
+  /* Type ----------------------------------------------------------- */
+  --font-base: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-base);
+
+  --fs-xs: 0.8125rem; /* 13 */
+  --fs-base: 1rem; /* 16 */
+  --fs-md: 1.25rem; /* 20 */
+  --fs-lg: 1.625rem; /* 26 */
+  --fs-xl: 2.0625rem; /* 33 */
+  --fs-2xl: 2.625rem; /* 42 */
+  --fs-3xl: 3.3125rem; /* 53 */
+  --fs-display: clamp(2.6rem, 9vw, 4.25rem); /* 42 → 68 */
+
+  --line-base: 1.618;
+  --line-snug: 1.35;
+  --line-tight: 1.08;
+
+  --tracking-display: -0.022em;
+  --tracking-heading: -0.012em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Space — Fibonacci ---------------------------------------------- */
+  --space-1: 0.3125rem; /* 5 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.8125rem; /* 13 */
+  --space-4: 1.3125rem; /* 21 */
+  --space-5: 2.125rem; /* 34 */
+  --space-6: 3.4375rem; /* 55 */
+  --space-7: 5.5625rem; /* 89 */
+
+  /* Layout — φ splits: 38.2% / 61.8% ------------------------------- */
+  --maxw: 71.5rem;
+  --measure: 34rem; /* ~68 characters */
+  --split-minor: 38.2%;
+  --split-major: 61.8%;
+
+  --radius-sm: 8px;
+  --radius: 13px;
+  --radius-lg: 21px;
+
+  --motion-duration: 380ms;
+  --motion-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Shadow — used sparingly; borders carry elevation everywhere else. */
+  --shadow-lifted: 0 -8px 24px rgba(25, 28, 36, 0.12);
+}
