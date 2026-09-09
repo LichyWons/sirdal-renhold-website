@@ -13,20 +13,44 @@
     <link rel="stylesheet" href="/assets/css/base.css" />
     <link rel="stylesheet" href="/assets/css/components.css" />
 
-    <!-- schema.org/LocalBusiness - kept in sync by hand with assets/js/config.js -->
-    <!-- TODO: potwierdzić z klientem - "address" er bevisst utelatt fordi
-       Google-profilen er satt opp uten offentlig adresse. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
+        "@id": "https://sirdalrenhold.no/#business",
         "name": "Sirdal Renhold AS",
-        "telephone": "+4746215212",
         "url": "https://sirdalrenhold.no",
-        "openingHours": "Mo-Su 07:00-22:00",
-        "areaServed": "Sirdal"
+        "telephone": "+4746215212",
+        "image": "https://sirdalrenhold.no/assets/img/logo.svg",
+        "logo": "https://sirdalrenhold.no/assets/img/logo.svg",
+        "description": "Profesjonell rengjøring i Sirdal — hyttevask, flyttevask, byggvask og vindusvask. Fast pris per m².",
+        "priceRange": "$$",
+        "currenciesAccepted": "NOK",
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "07:00",
+          "closes": "22:00"
+        }],
+        "areaServed": [
+          { "@type": "Place", "name": "Sirdal" },
+          { "@type": "Place", "name": "Tjørhom" }
+        ],
+        "sameAs": [
+          "https://maps.google.com/?cid=2789923926161723869"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Rengjøringstjenester",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hyttevask" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Flyttevask" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Byggvask" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vindusvask" } }
+          ]
+        }
       }
-    </script>
+      </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
