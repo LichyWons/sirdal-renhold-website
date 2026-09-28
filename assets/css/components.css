@@ -6,10 +6,12 @@
    comes from scale, colour and space — when every label is 700, nothing
    reads as emphasised.
 
-   Header breakpoint is 62rem, not 45rem. Between 720px and 1000px the
-   row (logo + five links + CTA + phone) does not fit and wraps onto
-   itself. The hamburger stays until there is genuinely room. The sticky
-   CTA bar hides at the same width so the two switch together. */
+   Header breakpoint is 65rem (1040px), not 45rem. Between 720px and
+   1040px the row (logo + five links + CTA + phone) does not fit and
+   wraps onto itself. The hamburger stays until there is genuinely room.
+   Below that width the phone link is hidden too — the sticky CTA bar
+   carries "Ring oss", so the number is never out of reach. The bar hides
+   at the same 65rem, so the two switch together. */
 
 /* Breadcrumbs ------------------------------------------------------------- */
 
@@ -165,8 +167,11 @@
   width: auto;
 }
 
+/* Hidden below the desktop breakpoint: the sticky CTA bar carries the
+   "Ring oss" button there, so the header stays uncluttered without
+   costing anyone the phone number. */
 .header-phone {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: var(--space-2);
   color: var(--ink-900);
@@ -278,7 +283,7 @@ body.nav-open {
   overflow: hidden;
 }
 
-@media (min-width: 62rem) {
+@media (min-width: 65rem) {
   .header-inner {
     flex-wrap: nowrap;
     gap: var(--space-5);
@@ -311,6 +316,7 @@ body.nav-open {
   }
 
   .header-phone {
+    display: inline-flex;
     order: 3;
   }
 
@@ -1084,8 +1090,9 @@ input[type='range'] {
 }
 
 /* Sticky mobile CTA bar --------------------------------------------------------------- */
-/* Hidden at 62rem, the same width the header switches to its desktop
-   layout — below that the nav is collapsed and the bar carries the CTA. */
+/* Hidden at 65rem, the same width the header switches to its desktop
+   layout — below that the nav is collapsed, the header phone link is
+   hidden, and this bar carries both the CTA and the phone number. */
 
 .sticky-cta {
   position: fixed;
@@ -1112,7 +1119,7 @@ input[type='range'] {
   transform: translateY(0);
 }
 
-@media (min-width: 62rem) {
+@media (min-width: 65rem) {
   .sticky-cta {
     display: none;
   }
