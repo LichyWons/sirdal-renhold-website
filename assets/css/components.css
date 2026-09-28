@@ -4,7 +4,12 @@
 
    Weight discipline: 600 is the heaviest weight used anywhere. Emphasis
    comes from scale, colour and space — when every label is 700, nothing
-   reads as emphasised. */
+   reads as emphasised.
+
+   Header breakpoint is 62rem, not 45rem. Between 720px and 1000px the
+   row (logo + five links + CTA + phone) does not fit and wraps onto
+   itself. The hamburger stays until there is genuinely room. The sticky
+   CTA bar hides at the same width so the two switch together. */
 
 /* Breadcrumbs ------------------------------------------------------------- */
 
@@ -115,9 +120,9 @@
    .site-header has overflow set to hidden, scroll or auto. If the bar
    still scrolls away, look for an overflow-x: hidden added to html,
    body or a page wrapper to suppress horizontal scrolling — replace it
-   with overflow-x: clip, which does not break sticky. */
+   with overflow-x: clip, which does not break sticky.
 
-/* Light header. The logo is a colour mark built for light backgrounds —
+   Light header. The logo is a colour mark built for light backgrounds —
    on navy its own navy lettering disappears. A hairline separates the
    bar from white page content; .is-scrolled deepens it once the page
    moves, so the header reads as a layer above the content. */
@@ -158,12 +163,6 @@
 .logo img {
   height: 34px;
   width: auto;
-}
-
-@media (min-width: 45rem) {
-  .logo img {
-    height: 42px;
-  }
 }
 
 .header-phone {
@@ -246,22 +245,6 @@
   color: var(--brand-600);
 }
 
-.main-nav li:has(.nav-cta) {
-  margin-top: var(--space-3);
-}
-
-.main-nav .nav-cta {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-@media (min-width: 45rem) {
-  .main-nav li:has(.nav-cta) {
-    margin-top: 0;
-    margin-left: var(--space-3);
-  }
-}
-
 /* Current page is marked with weight and a cyan underline rather than
    colour alone, so the state survives for colour-blind users. */
 .main-nav a[aria-current] {
@@ -270,15 +253,18 @@
   box-shadow: inset 0 -3px 0 var(--brand-accent);
 }
 
-.nav-cta {
+/* CTA inside the nav. The spacing lives on the <li>; the anchor itself
+   only has to undo what .main-nav a did to it — that selector is more
+   specific than .btn and would otherwise flatten the button to a text
+   link. Keeping the two concerns apart avoids the three-way margin
+   conflict this block used to have. */
+.main-nav li:has(.nav-cta) {
   margin-top: var(--space-3);
 }
 
-/* .main-nav a above (color/display/padding) is more specific than the
-   plain .btn/.btn-primary classes and would otherwise flatten the CTA
-   to a bare text link — restore the button look explicitly. */
 .main-nav a.nav-cta {
   display: inline-flex;
+  margin: 0;
   color: var(--cta-text);
   padding: var(--space-3) var(--space-5);
 }
@@ -287,7 +273,12 @@
   color: var(--cta-text);
 }
 
-@media (min-width: 45rem) {
+/* Locks the page behind the open mobile menu. */
+body.nav-open {
+  overflow: hidden;
+}
+
+@media (min-width: 62rem) {
   .header-inner {
     flex-wrap: nowrap;
     gap: var(--space-5);
@@ -298,14 +289,29 @@
   }
 
   .logo {
+    order: 1;
     margin-right: var(--space-6);
   }
 
+  .logo img {
+    height: 42px;
+  }
+
+  /* Nav sits after the phone link in the DOM so that it wraps cleanly to
+     its own row on mobile. On desktop, order puts it back between the
+     logo and the phone number. */
   .main-nav {
+    order: 2;
     flex-basis: auto;
     display: block;
+    margin-inline: 0;
+    padding-inline: 0;
     margin-right: auto;
     border-top: none;
+  }
+
+  .header-phone {
+    order: 3;
   }
 
   .main-nav ul {
@@ -319,8 +325,13 @@
     padding: var(--space-2) 0;
   }
 
-  .nav-cta {
+  .main-nav li:has(.nav-cta) {
     margin-top: 0;
+    margin-left: var(--space-3);
+  }
+
+  body.nav-open {
+    overflow: visible;
   }
 }
 
@@ -645,6 +656,12 @@ input[type='range'] {
   margin-bottom: var(--space-6);
 }
 
+/* Reserves space before the wizard renders, so the page below does not
+   jump once JavaScript fills it in (CLS). */
+.wizard:empty {
+  min-height: 32rem;
+}
+
 @media (min-width: 40rem) {
   .wizard {
     padding: var(--space-5);
@@ -829,6 +846,22 @@ input[type='range'] {
 .form-field input[aria-invalid='true'],
 .form-field textarea[aria-invalid='true'] {
   border-color: var(--danger);
+}
+
+/* Contact details list in page content (kontakt.html). Deliberately not
+   .footer-contact — a footer class used in the main content breaks the
+   next time the footer is restyled. */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.contact-list li {
+  margin-top: 0;
 }
 
 /* Price table (priser.html static fallback) ------------------------------------- */
@@ -1051,6 +1084,8 @@ input[type='range'] {
 }
 
 /* Sticky mobile CTA bar --------------------------------------------------------------- */
+/* Hidden at 62rem, the same width the header switches to its desktop
+   layout — below that the nav is collapsed and the bar carries the CTA. */
 
 .sticky-cta {
   position: fixed;
@@ -1077,7 +1112,7 @@ input[type='range'] {
   transform: translateY(0);
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 62rem) {
   .sticky-cta {
     display: none;
   }
@@ -1088,20 +1123,4 @@ input[type='range'] {
   .wizard-progress-bar > span {
     transition: none;
   }
-}
-.wizard:empty {
-  min-height: 32rem;
-}
-
-.contact-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.contact-list li {
-  margin-top: 0;
 }
