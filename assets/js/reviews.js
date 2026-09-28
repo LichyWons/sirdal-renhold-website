@@ -122,6 +122,12 @@ function renderReviews(container, data) {
 
   container.replaceChildren(summary, list);
   container.removeAttribute('data-loading');
+  document.querySelectorAll('[data-rating]').forEach((n) => {
+    n.textContent = formatRating(rating);
+  });
+  document.querySelectorAll('[data-review-count]').forEach((n) => {
+    n.textContent = reviewCount;
+  });
 }
 
 function renderLoading(container) {

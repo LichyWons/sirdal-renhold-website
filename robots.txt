@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /takk.html
 
 Sitemap: https://sirdalrenhold.no/sitemap.xml

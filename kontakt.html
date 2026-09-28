@@ -8,10 +8,50 @@
       name="description"
       content="Ta kontakt med Sirdal Renhold AS for hyttevask, flyttevask og mer. Ring oss eller send en henvendelse."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sirdal Renhold AS" />
+    <meta property="og:title" content="Kontakt oss – Sirdal Renhold AS" />
+    <meta
+      property="og:description"
+      content="Ta kontakt med Sirdal Renhold AS for hyttevask, flyttevask og mer. Ring oss eller send en henvendelse."
+    />
+    <meta property="og:url" content="https://sirdalrenhold.no/kontakt.html" />
+    <meta
+      property="og:image"
+      content="https://sirdalrenhold.no/assets/img/og-image.png"
+    />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+    <meta name="theme-color" content="#212C78" />
     <link rel="canonical" href="https://sirdalrenhold.no/kontakt.html" />
     <link rel="stylesheet" href="/assets/css/tokens.css" />
     <link rel="stylesheet" href="/assets/css/base.css" />
     <link rel="stylesheet" href="/assets/css/components.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#212C78" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Hjem",
+            "item": "https://sirdalrenhold.no/"
+          },
+          { "@type": "ListItem", "position": 2, "name": "Kontakt" }
+        ]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
@@ -39,7 +79,7 @@
               d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"
             />
           </svg>
-          <span data-business="phone-display">466 21 52 12</span>
+          <span data-business="phone-display">462 15 212</span>
         </a>
         <button
           class="hamburger"
@@ -60,9 +100,11 @@
             <li><a href="/priser.html">Priser</a></li>
             <li><a href="/om-oss.html">Om oss</a></li>
             <li><a href="/kontakt.html" aria-current="page">Kontakt</a></li>
-            <a class="btn btn-primary nav-cta" href="/priser.html"
-              >Regn ut pris</a
-            >
+            <li>
+              <a class="btn btn-primary nav-cta" href="/priser.html"
+                >Regn ut pris</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -71,29 +113,39 @@
     <main id="main">
       <section class="section">
         <div class="container">
+          <nav class="breadcrumb" aria-label="Brødsmuler">
+            <ol>
+              <li><a href="/index.html">Hjem</a></li>
+              <li aria-current="page">Kontakt</li>
+            </ol>
+          </nav>
           <h1>Kontakt oss</h1>
           <p>
-            Ring oss, send en e-post, eller fyll ut skjemaet under - vi svarer
-            så raskt vi kan.
+            Ring oss, eller fyll ut skjemaet under - vi svarer så raskt vi kan.
           </p>
 
-          <ul class="footer-contact" style="margin-bottom: var(--space-6)">
+          <ul class="contact-list">
             <li>
               Telefon:
               <a data-business="phone-href" href="tel:+4746215212"
-                ><span data-business="phone-display">466 21 52 12</span></a
+                ><span data-business="phone-display">462 15 212</span></a
               >
             </li>
-            <li>
-              E-post:
-              <a data-business="email-href" href="mailto:TODO"
-                ><span data-business="email-display">TODO</span></a
-              >
-            </li>
+
             <li>Åpningstider: Mandag–søndag 07:00–22:00</li>
           </ul>
 
-          <form data-contact-form novalidate>
+          <form data-contact-form>
+            <div class="sr-only" aria-hidden="true">
+              <label for="contact-company">Firma</label>
+              <input
+                type="text"
+                id="contact-company"
+                name="company"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
             <div class="form-field">
               <label for="contact-name">Navn</label>
               <input
@@ -159,12 +211,7 @@
         <ul class="footer-contact">
           <li>
             <a data-business="phone-href" href="tel:+4746215212"
-              ><span data-business="phone-display">466 21 52 12</span></a
-            >
-          </li>
-          <li>
-            <a data-business="email-href" href="mailto:TODO"
-              ><span data-business="email-display">TODO</span></a
+              ><span data-business="phone-display">462 15 212</span></a
             >
           </li>
         </ul>
@@ -188,15 +235,23 @@
 
     <script type="module" src="/assets/js/ui.js"></script>
     <script type="module">
-      // Standalone contact form - separate from the price wizard's own form.
-      // TODO: faza 3 - send skjemadata til backend i stedet for å bare
-      // omdirigere til takkesiden.
-      document
-        .querySelector('[data-contact-form]')
-        .addEventListener('submit', (event) => {
+      // Standalone contact form — separate from the price wizard's own form.
+      //
+      // TODO: faza 3 — send skjemadata til en Netlify-funksjon i stedet for
+      // bare å omdirigere. Slik det står nå får brukeren en takkeside uten at
+      // henvendelsen faktisk går noe sted. Ikke sett domenet på denne
+      // versjonen før backend er på plass.
+      //
+      // Honeypot: feltet [name="company"] er skjult for mennesker. Er det
+      // utfylt, kommer innsendingen fra en bot og skal forkastes i fase 3.
+      const form = document.querySelector('[data-contact-form]');
+
+      if (form) {
+        form.addEventListener('submit', (event) => {
           event.preventDefault();
           window.location.href = '/takk.html';
         });
+      }
     </script>
   </body>
 </html>

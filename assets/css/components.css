@@ -6,6 +6,39 @@
    comes from scale, colour and space — when every label is 700, nothing
    reads as emphasised. */
 
+/* Breadcrumbs ------------------------------------------------------------- */
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.breadcrumb li + li::before {
+  content: '›';
+  margin-right: var(--space-2);
+  color: var(--text-muted);
+}
+
+.breadcrumb li {
+  margin-top: 0;
+}
+
+.breadcrumb a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--brand-600);
+  text-decoration: underline;
+}
+
 /* Buttons ------------------------------------------------------------ */
 
 .btn {
@@ -213,9 +246,25 @@
   color: var(--brand-600);
 }
 
+.main-nav li:has(.nav-cta) {
+  margin-top: var(--space-3);
+}
+
+.main-nav .nav-cta {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (min-width: 45rem) {
+  .main-nav li:has(.nav-cta) {
+    margin-top: 0;
+    margin-left: var(--space-3);
+  }
+}
+
 /* Current page is marked with weight and a cyan underline rather than
    colour alone, so the state survives for colour-blind users. */
-.main-nav a[aria-current='page'] {
+.main-nav a[aria-current] {
   color: var(--ink-900);
   font-weight: var(--weight-medium);
   box-shadow: inset 0 -3px 0 var(--brand-accent);
@@ -1039,4 +1088,20 @@ input[type='range'] {
   .wizard-progress-bar > span {
     transition: none;
   }
+}
+.wizard:empty {
+  min-height: 32rem;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.contact-list li {
+  margin-top: 0;
 }

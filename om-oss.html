@@ -8,10 +8,47 @@
       name="description"
       content="Møt Sirdal Renhold AS - lokal vaskehjelp i Sirdal med fokus på miljøvennlig rengjøring og fornøyde kunder."
     />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sirdal Renhold AS" />
+    <meta property="og:title" content="Om oss – Sirdal Renhold AS" />
+    <meta
+      property="og:description"
+      content="Møt Sirdal Renhold AS - lokal vaskehjelp i Sirdal med fokus på miljøvennlig rengjøring og fornøyde kunder."
+    />
+    <meta property="og:url" content="https://sirdalrenhold.no/om-oss.html" />
+    <meta
+      property="og:image"
+      content="https://sirdalrenhold.no/assets/img/og-image.png"
+    />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="canonical" href="https://sirdalrenhold.no/om-oss.html" />
     <link rel="stylesheet" href="/assets/css/tokens.css" />
     <link rel="stylesheet" href="/assets/css/base.css" />
     <link rel="stylesheet" href="/assets/css/components.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#212C78" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Hjem",
+            "item": "https://sirdalrenhold.no/"
+          },
+          { "@type": "ListItem", "position": 2, "name": "Om oss" }
+        ]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
@@ -39,7 +76,7 @@
               d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"
             />
           </svg>
-          <span data-business="phone-display">466 21 52 12</span>
+          <span data-business="phone-display">462 15 212</span>
         </a>
         <button
           class="hamburger"
@@ -60,9 +97,11 @@
             <li><a href="/priser.html">Priser</a></li>
             <li><a href="/om-oss.html" aria-current="page">Om oss</a></li>
             <li><a href="/kontakt.html">Kontakt</a></li>
-            <a class="btn btn-primary nav-cta" href="/priser.html"
-              >Regn ut pris</a
-            >
+            <li>
+              <a class="btn btn-primary nav-cta" href="/priser.html"
+                >Regn ut pris</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -71,26 +110,47 @@
     <main id="main">
       <section class="section">
         <div class="container">
+          <nav class="breadcrumb" aria-label="Brødsmuler">
+            <ol>
+              <li><a href="/index.html">Hjem</a></li>
+              <li aria-current="page">Om oss</li>
+            </ol>
+          </nav>
+
           <h1>Om oss</h1>
+
+          <!-- TODO: bytt ut med ekte bilde fra kunden -->
           <img
             src="/assets/img/about-placeholder.svg"
-            alt=""
+            alt="Rengjøring av hytte i Sirdal"
             width="400"
             height="300"
             loading="lazy"
           />
+
           <p>
-            <!-- TODO: historien til Sirdal Renhold - hvem startet firmaet, når, og hvorfor -->
+            Sirdal Renhold er et lokalt renholdsfirma. Vi vasker hytter, boliger
+            og lokaler i Sirdal og området rundt — enten det gjelder jevnlig
+            vask mellom utleieopphold, grundig utvask ved flytting eller
+            opprydding etter oppussing.
           </p>
+
           <p>
-            <!-- TODO: hva skiller dere fra andre renholdsfirmaer i området -->
+            Vi holder fast pris per kvadratmeter. Du ser hva jobben koster før
+            vi setter i gang, og slipper timelister og uklare tillegg i
+            etterkant.
           </p>
+
+          <!-- TODO: avsnitt om firmaets historie - hvem startet det, når og
+             hvorfor. Venter på informasjon fra kunden. -->
 
           <h2>Våre verdier</h2>
           <ul>
-            <li><!-- TODO: f.eks. miljøvennlige produkter --></li>
-            <li><!-- TODO: f.eks. lokalkunnskap i Sirdal --></li>
-            <li><!-- TODO: f.eks. fornøydgaranti --></li>
+            <li>
+              Miljøvennlige rengjøringsmidler, trygge for både folk og natur
+            </li>
+            <li>Lokalkjennskap — vi kjenner hyttene og forholdene i Sirdal</li>
+            <li>Fast pris per kvadratmeter, uten skjulte tillegg</li>
           </ul>
 
           <p><a class="btn btn-primary" href="/kontakt.html">Kontakt oss</a></p>
@@ -102,19 +162,17 @@
       <div class="container footer-inner">
         <div class="footer-brand">
           <p class="footer-name" data-business="name">Sirdal Renhold AS</p>
-          <p class="footer-orgnr" data-business="org-nr">Org.nr: 934 822 706</p>
+          <p class="footer-orgnr">
+            Org.nr: <span data-business="org-nr">934 822 706</span>
+          </p>
         </div>
         <ul class="footer-contact">
           <li>
             <a data-business="phone-href" href="tel:+4746215212"
-              ><span data-business="phone-display">466 21 52 12</span></a
+              ><span data-business="phone-display">462 15 212</span></a
             >
           </li>
-          <li>
-            <a data-business="email-href" href="mailto:TODO"
-              ><span data-business="email-display">TODO</span></a
-            >
-          </li>
+          <!-- TODO: e-post fra kunden - legg tilbake når adressen er kjent -->
         </ul>
         <ul class="footer-links">
           <li><a href="/personvern.html">Personvern</a></li>

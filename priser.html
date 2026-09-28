@@ -8,10 +8,49 @@
       name="description"
       content="Se priser for hyttevask, flyttevask, byggvask, vindusvask, flyttehjelp og dødsbo hos Sirdal Renhold. Bruk prisoverslaget for et raskt estimat."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sirdal Renhold AS" />
+    <meta property="og:title" content="Priser – Sirdal Renhold AS" />
+    <meta
+      property="og:description"
+      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask, flyttehjelp og dødsbo hos Sirdal Renhold. Bruk prisoverslaget for et raskt estimat."
+    />
+    <meta property="og:url" content="https://sirdalrenhold.no/priser.html" />
+    <meta
+      property="og:image"
+      content="https://sirdalrenhold.no/assets/img/og-image.png"
+    />
+    <meta property="og:locale" content="nb_NO" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+    <meta name="theme-color" content="#212C78" />
     <link rel="canonical" href="https://sirdalrenhold.no/priser.html" />
     <link rel="stylesheet" href="/assets/css/tokens.css" />
     <link rel="stylesheet" href="/assets/css/base.css" />
     <link rel="stylesheet" href="/assets/css/components.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#212C78" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Hjem",
+            "item": "https://sirdalrenhold.no/"
+          },
+          { "@type": "ListItem", "position": 2, "name": "Priser" }
+        ]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
@@ -39,7 +78,7 @@
               d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"
             />
           </svg>
-          <span data-business="phone-display">466 21 52 12</span>
+          <span data-business="phone-display">462 15 212</span>
         </a>
         <button
           class="hamburger"
@@ -60,9 +99,11 @@
             <li><a href="/priser.html" aria-current="page">Priser</a></li>
             <li><a href="/om-oss.html">Om oss</a></li>
             <li><a href="/kontakt.html">Kontakt</a></li>
-            <a class="btn btn-primary nav-cta" href="/priser.html"
-              >Regn ut pris</a
-            >
+            <li>
+              <a class="btn btn-primary nav-cta" href="/priser.html"
+                >Regn ut pris</a
+              >
+            </li>
           </ul>
         </nav>
       </div>
@@ -71,6 +112,12 @@
     <main id="main">
       <section class="section">
         <div class="container">
+          <nav class="breadcrumb" aria-label="Brødsmuler">
+            <ol>
+              <li><a href="/index.html">Hjem</a></li>
+              <li aria-current="page">Priser</li>
+            </ol>
+          </nav>
           <h1>Priser</h1>
           <p>
             Svar på noen få spørsmål under for et skreddersydd prisoverslag,
@@ -96,7 +143,7 @@
           <!-- Static price table - always visible, no JavaScript required.
              This is the only SEO-crawlable carrier of price phrases, so
              keep it in sync with assets/js/config.js by hand. -->
-          <section id="prisliste">
+          <section class="section section--ruled" id="prisliste">
             <h2>Prisliste</h2>
             <table class="price-table">
               <caption>
@@ -150,15 +197,13 @@
                 </tr>
                 <tr>
                   <th scope="row">Vindusvask</th>
-                  <td><!-- TODO: satser for vindusvask mangler --></td>
+                  <td>Pris på forespørsel</td>
                 </tr>
               </tbody>
             </table>
             <p class="disclaimer">
               Anslaget er veiledende og ikke et bindende tilbud. Endelig pris
-              bekreftes etter befaring. Alle priser er
-              <!-- TODO: bekreft med kunde -->
-              eks. mva.
+              bekreftes etter befaring. Alle priser er eks. mva.
             </p>
           </section>
         </div>

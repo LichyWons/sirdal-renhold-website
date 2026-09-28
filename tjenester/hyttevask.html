@@ -9,17 +9,91 @@
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#212C78">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Hyttevask",
+      "serviceType": "Hyttevask",
+      "description": "Jevnlig rengjøring av hytte — kjøkken, bad, flater og gulv. Fast pris per kvadratmeter.",
+      "provider": { "@id": "https://sirdalrenhold.no/#business" },
+      "areaServed": [
+        { "@type": "Place", "name": "Sirdal" },
+        { "@type": "Place", "name": "Tjørhom" }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "NOK",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "10",
+          "priceCurrency": "NOK",
+          "unitText": "per m²"
+        }
+      }
+    }
+    </script>
+    
+      <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Hjem", "item": "https://sirdalrenhold.no/" },
+            { "@type": "ListItem", "position": 2, "name": "Tjenester", "item": "https://sirdalrenhold.no/tjenester.html" },
+            { "@type": "ListItem", "position": 3, "name": "Hyttevask" }
+          ]
+        }
+        </script>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Hvor ofte bør hytta vaskes?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Det kommer an på bruken. Ved utleie anbefaler vi vask mellom hvert opphold. Brukes hytta privat, holder det ofte med en grundig vask ved sesongstart og slutt."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Hva er forskjellen på standard og grundig vask?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Standard vask (10 kr/m²) er den vanlige rengjøringen av kjøkken, bad, flater og gulv. Grundig vask (70 kr/m²) går i tillegg over tak, vegger, innsiden av skap og inkluderer vinduspuss."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Kan dere ta sengetøy også?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Ja. Vi leier ut sengetøysett for 190 kr per person, og vask av sengetøy koster 25 kr per stykk."
+                }
+              }
+            ]
+          }
+          </script>
+
 </head>
 <body>
   <a class="skip-link" href="#main">Hopp til hovedinnhold</a>
   <header class="site-header">
     <div class="container header-inner">
       <a class="logo" href="/index.html" aria-label="Sirdal Renhold – til forsiden">
-        <img src="/assets/img/logo.svg" alt="" width="600" height="213">
+        <img src="/assets/img/logo.png" alt="" width="600" height="213">
       </a>
       <a class="header-phone" data-business="phone-href" href="tel:+4746215212">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"/></svg>
-        <span data-business="phone-display">466 21 52 12</span>
+        <span data-business="phone-display">462 15 212</span>
       </a>
       <button class="hamburger" type="button" aria-expanded="false" aria-controls="main-nav" data-nav-toggle>
         <span class="sr-only">Åpne meny</span>
@@ -30,12 +104,12 @@
       <nav class="main-nav" id="main-nav" data-nav aria-label="Hovedmeny">
         <ul>
           <li><a href="/index.html">Hjem</a></li>
-          <li><a href="/tjenester.html">Tjenester</a></li>
-          <li><a href="/priser.html">Priser</a></li>
+          <li><a href="/tjenester.html" aria-current="true">Tjenester</a></li>         
+           <li><a href="/priser.html">Priser</a></li>
           <li><a href="/om-oss.html">Om oss</a></li>
           <li><a href="/kontakt.html">Kontakt</a></li>
-        </ul>
-        <a class="btn btn-primary nav-cta" href="/priser.html">Regn ut pris</a>
+          <li><a class="btn btn-primary nav-cta" href="/priser.html">Regn ut pris</a></li>
+      </ul>
       </nav>
     </div>
   </header>
@@ -43,31 +117,40 @@
   <main id="main">
     <section class="section">
       <div class="container">
+        <nav class="breadcrumb" aria-label="Brødsmuler">
+          <ol>
+            <li><a href="/index.html">Hjem</a></li>
+            <li><a href="/tjenester.html">Tjenester</a></li>
+            <li aria-current="page">Hyttevask</li>
+          </ol>
+        </nav>
         <h1>Hyttevask</h1>
-        <p><!-- TODO: innledende avsnitt om hyttevask-tjenesten (2-3 setninger) --></p>
+        <p>Hytta skal være klar når du kommer, og ryddig når du drar. Vi tar den jevnlige vasken — kjøkken, bad, støv og gulv — enten du bruker hytta selv eller leier den ut. Fast pris per kvadratmeter, uten overraskelser.</p>
 
         <h2>Hva er inkludert</h2>
         <ul>
-          <li><!-- TODO: liste over hva som inngår i standard hyttevask --></li>
-          <li><!-- TODO: f.eks. støvtørking, gulvvask, bad, kjøkken --></li>
-          <li><!-- TODO: eventuelle tillegg som kan bestilles --></li>
+          <li>Kjøkken: benker, komfyr og utvendig på hvitevarer</li>
+          <li>Bad: dusj, toalett, servant og speil</li>
+          <li>Støvtørking av flater, og vask av alle gulv</li>
         </ul>
 
         <h2>Pris</h2>
-        <p>Standard vask koster <strong>10 kr/m²</strong>. Bruk <a href="/priser.html">prisoverslaget</a> for et estimat basert på areal, eller se hele <a href="/priser.html#prisliste">prislisten</a>.</p>
+        <p>Standard vask koster <strong>10 kr/m²</strong>. Bruk <a href="/priser.html">prisoverslaget</a> for et estimat basert på areal.</p>
 
         <h2>Ofte stilte spørsmål</h2>
         <details class="faq-item">
-          <summary><!-- TODO: spørsmål 1, f.eks. "Må jeg være til stede under vasken?" --></summary>
-          <p><!-- TODO: svar 1 --></p>
+          <summary>Hvor ofte bør hytta vaskes</summary>
+          <p>Det kommer an på bruken. Ved utleie anbefaler vi vask mellom hvert opphold. Brukes hytta privat, holder det ofte med en grundig vask ved sesongstart og slutt.</p>
         </details>
         <details class="faq-item">
-          <summary><!-- TODO: spørsmål 2, f.eks. "Tar dere med utstyr og rengjøringsmidler?" --></summary>
-          <p><!-- TODO: svar 2 --></p>
+          <summary>Hva er forskjellen på standard og grundig vask?
+          </summary>
+          <p>Standard vask (10 kr/m²) er den vanlige rengjøringen av kjøkken, bad, flater og gulv. Grundig vask (70 kr/m²) går i tillegg over tak, vegger, innsiden av skap og inkluderer vinduspuss.</p>
         </details>
         <details class="faq-item">
-          <summary><!-- TODO: spørsmål 3, f.eks. "Hvor ofte anbefales hyttevask?" --></summary>
-          <p><!-- TODO: svar 3 --></p>
+          <summary>Kan dere ta sengetøy også?</summary>
+          <p>
+          Ja. Vi leier ut sengetøysett for 190 kr per person, og vask av sengetøy koster 25 kr per stykk.</p>
         </details>
 
         <p>
@@ -85,8 +168,8 @@
         <p class="footer-orgnr" data-business="org-nr">Org.nr: 934 822 706</p>
       </div>
       <ul class="footer-contact">
-        <li><a data-business="phone-href" href="tel:+4746215212"><span data-business="phone-display">466 21 52 12</span></a></li>
-        <li><a data-business="email-href" href="mailto:TODO"><span data-business="email-display">TODO</span></a></li>
+        <li><a data-business="phone-href" href="tel:+4746215212"><span data-business="phone-display">462 15 212</span></a></li>
+        <!-- TODO: e-post fra kunde - legg tilbake når adressen er kjent -->
       </ul>
       <ul class="footer-links">
         <li><a href="/personvern.html">Personvern</a></li>
