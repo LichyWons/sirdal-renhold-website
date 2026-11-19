@@ -6,14 +6,14 @@
     <title>Priser – Sirdal Renhold AS</title>
     <meta
       name="description"
-      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask, flyttehjelp og dødsbo hos Sirdal Renhold. Bruk prisoverslaget for et raskt estimat."
+      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask og dødsbo hos Sirdal Renhold. Alle priser inkl. MVA."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sirdal Renhold AS" />
     <meta property="og:title" content="Priser – Sirdal Renhold AS" />
     <meta
       property="og:description"
-      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask, flyttehjelp og dødsbo hos Sirdal Renhold. Bruk prisoverslaget for et raskt estimat."
+      content="Se priser for hyttevask, flyttevask, byggvask, vindusvask og dødsbo hos Sirdal Renhold. Alle priser inkl. MVA."
     />
     <meta property="og:url" content="https://sirdalrenhold.no/priser.html" />
     <meta
@@ -140,6 +140,31 @@
             aria-label="Prisoverslag steg for steg"
           ></section>
 
+          <!-- Netlify registers forms by parsing the built HTML, and never
+             sees the one the wizard creates at runtime. This hidden copy is
+             what makes the "prisforesporsel" form exist, so the field names
+             here must match the ones in assets/js/calculator.js exactly.
+             Do not delete it: without it every submission 404s. -->
+          <form
+            name="prisforesporsel"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            hidden
+          >
+            <input type="hidden" name="form-name" value="prisforesporsel" />
+            <input type="text" name="bot-field" />
+            <input type="text" name="tjeneste" />
+            <input type="text" name="areal" />
+            <input type="text" name="vindusvask" />
+            <input type="text" name="tillegg" />
+            <input type="text" name="anslag" />
+            <input type="text" name="name" />
+            <input type="tel" name="phone" />
+            <input type="email" name="email" />
+            <textarea name="message"></textarea>
+            <input type="checkbox" name="consent" />
+          </form>
+
           <!-- Static price table - always visible, no JavaScript required.
              This is the only SEO-crawlable carrier of price phrases, so
              keep it in sync with assets/js/config.js by hand. -->
@@ -157,39 +182,32 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Standard vask (hyttevask / daglig vask)</th>
-                  <td>10 kr/m²</td>
+                  <th scope="row">Hyttevask</th>
+                  <td>15 kr/m²</td>
                 </tr>
                 <tr>
                   <th scope="row">
-                    Grundig vask (flyttevask / utvask) – inkl. vinduspuss inne
-                    og ute
+                    Flyttevask (utvask) – utvendig vindusvask etter avtale
                   </th>
-                  <td>70 kr/m²</td>
+                  <td>95 kr/m²</td>
                 </tr>
                 <tr>
                   <th scope="row">Byggvask (etter oppussing)</th>
-                  <td>40 kr/m²</td>
+                  <td>55 kr/m²</td>
                 </tr>
                 <tr>
-                  <th scope="row">Sengetøysett (leie), per person</th>
-                  <td>190 kr</td>
+                  <th scope="row">
+                    Leie av sengetøy, per sett – dynetrekk, putetrekk, laken,
+                    ett stort og ett lite håndkle
+                  </th>
+                  <td>200 kr</td>
                 </tr>
                 <tr>
-                  <th scope="row">Vask av sengetøy, per stk</th>
-                  <td>25 kr</td>
-                </tr>
-                <tr>
-                  <th scope="row">Starter pack</th>
-                  <td>300 kr</td>
-                </tr>
-                <tr>
-                  <th scope="row">Påfyll</th>
-                  <td>fra 100 kr</td>
-                </tr>
-                <tr>
-                  <th scope="row">Flyttehjelp</th>
-                  <td>1 100 kr/t (10 % rabatt ved samtidig Grundig vask)</td>
+                  <th scope="row">
+                    Forbrukspakke, per måned – ingen abonnement eller
+                    automatisk fornyelse
+                  </th>
+                  <td>375 kr</td>
                 </tr>
                 <tr>
                   <th scope="row">Dødsbo</th>
@@ -202,8 +220,8 @@
               </tbody>
             </table>
             <p class="disclaimer">
-              Anslaget er veiledende og ikke et bindende tilbud. Endelig pris
-              bekreftes etter befaring. Alle priser er eks. mva.
+              Alle priser er oppgitt inkl. MVA. Anslaget er veiledende og ikke
+              et bindende tilbud. Endelig pris bekreftes etter befaring.
             </p>
           </section>
         </div>
