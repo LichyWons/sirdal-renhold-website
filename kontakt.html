@@ -135,7 +135,20 @@
             <li>Åpningstider: Mandag–søndag 07:00–22:00</li>
           </ul>
 
-          <form data-contact-form>
+          <!-- Native Netlify Form: it stores the lead, notifies the client
+             (Netlify → Forms → Form notifications) and triggers the
+             confirmation e-mail in netlify/functions/submission-created.mjs.
+             It posts without JavaScript, so it keeps working if a script
+             fails to load. Do not add a submit handler that calls
+             preventDefault — the submission would never reach Netlify. -->
+          <form
+            name="kontakt"
+            method="POST"
+            action="/takk.html"
+            data-netlify="true"
+            netlify-honeypot="company"
+          >
+            <input type="hidden" name="form-name" value="kontakt" />
             <div class="sr-only" aria-hidden="true">
               <label for="contact-company">Firma</label>
               <input
@@ -234,24 +247,5 @@
     </div>
 
     <script type="module" src="/assets/js/ui.js"></script>
-    <script type="module">
-      // Standalone contact form — separate from the price wizard's own form.
-      //
-      // TODO: faza 3 — send skjemadata til en Netlify-funksjon i stedet for
-      // bare å omdirigere. Slik det står nå får brukeren en takkeside uten at
-      // henvendelsen faktisk går noe sted. Ikke sett domenet på denne
-      // versjonen før backend er på plass.
-      //
-      // Honeypot: feltet [name="company"] er skjult for mennesker. Er det
-      // utfylt, kommer innsendingen fra en bot og skal forkastes i fase 3.
-      const form = document.querySelector('[data-contact-form]');
-
-      if (form) {
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          window.location.href = '/takk.html';
-        });
-      }
-    </script>
   </body>
 </html>

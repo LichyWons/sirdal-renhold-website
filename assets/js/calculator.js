@@ -1,15 +1,24 @@
 // Two calculators live here:
 //  1. initMiniCalculator() - the two-slider teaser on index.html.
-//  2. initPriceWizard()    - the full four-screen wizard on priser.html.
+//  2. initPriceWizard()    - the full multi-screen wizard on priser.html.
 //
 // The wizard keeps its state in a plain object and mirrors the current
 // screen to location.hash (e.g. "#steg=2"), so the browser Back button
 // steps backward through the wizard instead of leaving the page.
+//
+// Submitting the wizard posts to Netlify Forms (see FORM_NAME below). That
+// stores the lead, notifies the client, and triggers the auto-reply in
+// netlify/functions/submission-created.mjs.
 
 import { PRICING } from './config.js';
 
 const DISCLAIMER =
   'Anslaget er veiledende og ikke et bindende tilbud. Endelig pris bekreftes etter befaring.';
+
+// Must match the hidden static form in priser.html. Netlify parses the
+// built HTML to register forms, and never sees a form that JavaScript
+// creates — the hidden copy is what makes this name exist.
+const FORM_NAME = 'prisforesporsel';
 
 /** Format a number the Norwegian way, e.g. 1234 -> "1 234 kr". */
 function formatNOK(amount) {
@@ -36,10 +45,11 @@ export function initMiniCalculator() {
   function update() {
     const area = Number(areaInput.value);
     const checked = widget.querySelector('[data-mini-calc-type]:checked');
-    const type = checked ? checked.value : 'standard';
-    const rate = PRICING.cleaning[type].rate;
+    const type = checked ? checked.value : 'hyttevask';
+    const service = PRICING.cleaning[type];
+    if (!service) return;
     if (areaValue) areaValue.textContent = String(area);
-    if (resultEl) resultEl.textContent = formatNOK(area * rate);
+    if (resultEl) resultEl.textContent = formatNOK(area * service.rate);
   }
 
   areaInput.addEventListener('input', update);
@@ -53,22 +63,23 @@ export function initMiniCalculator() {
 
 function createInitialState() {
   return {
-    needs: { rengjoring: false, vindusvask: false, flyttehjelp: false, dodsbo: false },
+    needs: { rengjoring: false, vindusvask: false, dodsbo: false },
     cleaning: { type: null, area: 80 },
-    windows: { addExtra: false, tierId: null, type: null },
-    extras: { sengetoysett: 0, vaskAvSengetoy: 0, starterPack: false, flyttehjelpHours: 0 },
+    windows: { tierId: null, type: null },
+    extras: { sengetoysett: 0, forbrukspakke: false },
   };
 }
 
 /** Decide which screens apply, in order, based on the answers on screen 1. */
 function computeFlow(needs) {
-  const onlyDodsbo = needs.dodsbo && !needs.rengjoring && !needs.vindusvask && !needs.flyttehjelp;
+  const onlyDodsbo = needs.dodsbo && !needs.rengjoring && !needs.vindusvask;
   if (onlyDodsbo) return ['needs', 'summary'];
 
   const flow = ['needs'];
   if (needs.rengjoring) flow.push('cleaning');
   if (needs.vindusvask) flow.push('windows');
-  flow.push('extras'); // Always offered, always skippable.
+  // Add-ons only make sense alongside cleaning, not for a pure window job.
+  if (needs.rengjoring) flow.push('extras');
   flow.push('summary');
   return flow;
 }
@@ -83,63 +94,83 @@ function computeLines(state) {
     const amount = service.rate * state.cleaning.area;
     lines.push({ label: `${service.label} – ${state.cleaning.area} m²`, amount });
     total += amount;
+
+    // Flyttevask no longer bundles exterior windows; say so where the
+    // customer is reading the price rather than burying it in the FAQ.
+    if (service.note) {
+      lines.push({ label: service.label, amount: null, note: service.note });
+    }
   }
 
-  if (state.needs.vindusvask) {
-    const includedByGrundig = state.cleaning.type === 'grundig';
-    if (includedByGrundig) {
+  if (state.needs.vindusvask && state.windows.tierId && state.windows.type) {
+    const tier = PRICING.windows.tiers.find((t) => t.id === state.windows.tierId);
+    const type = PRICING.windows.types[state.windows.type];
+    const price = PRICING.windows.available ? type?.price : null;
+
+    if (price != null && tier) {
+      const amount = tier.count * price;
+      lines.push({ label: `Vindusvask – ${tier.label}, ${type.label}`, amount });
+      total += amount;
+    } else {
+      // No rates configured yet — never invent a price, and never show 0 kr,
+      // which customers read as "included".
       lines.push({
-        label: 'Vindusvask (inne og ute)',
-        amount: 0,
-        note: 'Inkludert i Grundig vask',
-      });
-    }
-    const wantsPricedExtra = !includedByGrundig || state.windows.addExtra;
-    if (wantsPricedExtra && state.windows.tierId && state.windows.type) {
-      // No rates exist yet for window cleaning - never invent a price here.
-      lines.push({
-        label: includedByGrundig ? 'Vindusvask – utover inkludert omfang' : 'Vindusvask',
-        amount: 0,
-        note: 'Pris oppgis av oss (satser mangler)',
+        label: `Vindusvask – ${tier ? tier.label : ''}${type ? `, ${type.label}` : ''}`,
+        amount: null,
+        note: 'Pris på forespørsel',
       });
     }
   }
 
   if (state.extras.sengetoysett > 0) {
-    const amount = state.extras.sengetoysett * PRICING.extras.sengetoysett.price;
-    lines.push({ label: `Sengetøysett (leie) × ${state.extras.sengetoysett}`, amount });
+    const extra = PRICING.extras.sengetoysett;
+    const amount = state.extras.sengetoysett * extra.price;
+    lines.push({ label: `${extra.label} × ${state.extras.sengetoysett}`, amount });
     total += amount;
   }
 
-  if (state.extras.vaskAvSengetoy > 0) {
-    const amount = state.extras.vaskAvSengetoy * PRICING.extras.vaskAvSengetoy.price;
-    lines.push({ label: `Vask av sengetøy × ${state.extras.vaskAvSengetoy}`, amount });
-    total += amount;
-  }
-
-  if (state.extras.starterPack) {
-    const amount = PRICING.extras.starterPack.price;
-    lines.push({ label: 'Starter pack', amount });
-    total += amount;
-  }
-
-  if (state.needs.flyttehjelp && state.extras.flyttehjelpHours > 0) {
-    const discountApplies = state.needs.rengjoring && state.cleaning.type === 'grundig';
-    let amount = PRICING.flyttehjelp.hourlyRate * state.extras.flyttehjelpHours;
-    if (discountApplies) amount *= 1 - PRICING.flyttehjelp.discountWithGrundig;
-    lines.push({
-      label: `Flyttehjelp × ${state.extras.flyttehjelpHours} t${discountApplies ? ' (10 % rabatt)' : ''}`,
-      amount,
-    });
-    total += amount;
+  if (state.extras.forbrukspakke) {
+    const extra = PRICING.extras.forbrukspakke;
+    lines.push({ label: `${extra.label} (${extra.unit})`, amount: extra.price });
+    total += extra.price;
   }
 
   if (state.needs.dodsbo) {
-    // Never part of the sum - always quoted after a site visit.
-    lines.push({ label: 'Dødsbo', amount: null, note: PRICING.dodsbo.note });
+    // Never part of the sum — always quoted after a site visit.
+    lines.push({ label: PRICING.dodsbo.label, amount: null, note: PRICING.dodsbo.note });
   }
 
   return { lines, total };
+}
+
+/** Flatten the wizard state into the fields the Netlify form expects. */
+function summariseForForm(state) {
+  const { lines, total } = computeLines(state);
+
+  const service = state.cleaning.type ? PRICING.cleaning[state.cleaning.type] : null;
+  const chosen = [];
+  if (state.needs.rengjoring && service) chosen.push(service.label);
+  if (state.needs.vindusvask) chosen.push('Vindusvask');
+  if (state.needs.dodsbo) chosen.push('Dødsbo');
+
+  const windowTier = PRICING.windows.tiers.find((t) => t.id === state.windows.tierId);
+  const windowType = PRICING.windows.types[state.windows.type];
+
+  const tillegg = [];
+  if (state.extras.sengetoysett > 0) {
+    tillegg.push(`${PRICING.extras.sengetoysett.label} × ${state.extras.sengetoysett}`);
+  }
+  if (state.extras.forbrukspakke) tillegg.push(PRICING.extras.forbrukspakke.label);
+
+  return {
+    tjeneste: chosen.join(', '),
+    areal: state.needs.rengjoring ? String(state.cleaning.area) : '',
+    vindusvask: windowTier
+      ? `${windowTier.label}${windowType ? `, ${windowType.label}` : ''}`
+      : '',
+    tillegg: tillegg.join(', '),
+    anslag: lines.some((l) => l.amount != null) ? formatNOK(total) : 'Etter befaring',
+  };
 }
 
 export function initPriceWizard() {
@@ -230,7 +261,6 @@ function renderNeedsScreen(container, state, { next }) {
   const options = [
     ['rengjoring', 'Rengjøring'],
     ['vindusvask', 'Vindusvask'],
-    ['flyttehjelp', 'Flyttehjelp'],
     ['dodsbo', 'Dødsbo'],
   ];
 
@@ -343,26 +373,18 @@ function renderCleaningScreen(container, state, { next, prev }) {
 }
 
 function renderWindowsScreen(container, state, { next, prev }) {
-  const includedByGrundig = state.cleaning.type === 'grundig';
   const tiers = PRICING.windows.tiers;
   const types = Object.values(PRICING.windows.types);
+  const selected = state.cleaning.type ? PRICING.cleaning[state.cleaning.type] : null;
 
   container.innerHTML = `
     <h2>Vindusvask</h2>
     ${
-      includedByGrundig
-        ? `
-      <p class="wizard-note">Vinduspuss innvendig og utvendig er allerede inkludert i Grundig vask.</p>
-      <label class="checkbox-field">
-        <input type="checkbox" id="extra-windows" ${state.windows.addExtra ? 'checked' : ''}>
-        Jeg trenger vindusvask utover det som er inkludert
-      </label>
-    `
-        : `
-      <p class="wizard-note">Vindusvask kommer i tillegg til rengjøringen.</p>
-    `
+      selected && selected.note
+        ? `<p class="wizard-note">${selected.note}</p>`
+        : '<p class="wizard-note">Vindusvask kommer i tillegg til rengjøringen.</p>'
     }
-    <div class="wizard-field" data-windows-detail>
+    <div class="wizard-field">
       <label for="window-tier">Antall vinduer</label>
       <select id="window-tier">
         <option value="">Velg antall</option>
@@ -383,7 +405,11 @@ function renderWindowsScreen(container, state, { next, prev }) {
           )
           .join('')}
       </fieldset>
-      <p class="wizard-note">Pris for vindusvask er ikke fastsatt ennå og oppgis av oss direkte.</p>
+      ${
+        PRICING.windows.available
+          ? ''
+          : '<p class="wizard-note">Pris for vindusvask oppgis av oss direkte etter forespørselen.</p>'
+      }
     </div>
     <p class="wizard-hint" data-hint></p>
     <div class="wizard-nav">
@@ -392,31 +418,16 @@ function renderWindowsScreen(container, state, { next, prev }) {
     </div>
   `;
 
-  const detail = container.querySelector('[data-windows-detail]');
-  const extraCheckbox = container.querySelector('#extra-windows');
   const tierSelect = container.querySelector('#window-tier');
   const typeRadios = container.querySelectorAll('input[name="window-type"]');
   const nextBtn = container.querySelector('[data-next]');
   const hint = container.querySelector('[data-hint]');
 
-  function detailRequired() {
-    return !includedByGrundig || (extraCheckbox && extraCheckbox.checked);
-  }
-
   function updateEnabled() {
-    const required = detailRequired();
-    detail.hidden = !required;
-    const filled = !required || (state.windows.tierId && state.windows.type);
+    const filled = Boolean(state.windows.tierId && state.windows.type);
     nextBtn.disabled = !filled;
     hint.hidden = filled;
     hint.textContent = 'Velg antall vinduer og type for å fortsette.';
-  }
-
-  if (extraCheckbox) {
-    extraCheckbox.addEventListener('change', () => {
-      state.windows.addExtra = extraCheckbox.checked;
-      updateEnabled();
-    });
   }
 
   tierSelect.addEventListener('change', () => {
@@ -437,36 +448,22 @@ function renderWindowsScreen(container, state, { next, prev }) {
 }
 
 function renderExtrasScreen(container, state, { next, prev }) {
+  const sengetoy = PRICING.extras.sengetoysett;
+  const forbruk = PRICING.extras.forbrukspakke;
+
   container.innerHTML = `
     <h2>Tillegg</h2>
     <p>Valgfritt — hopp over hvis du ikke trenger noe av dette.</p>
     <div class="wizard-field">
-      <label for="sengetoysett">Sengetøysett (leie) – ${formatNOK(PRICING.extras.sengetoysett.price)} per person</label>
+      <label for="sengetoysett">${sengetoy.label} – ${formatNOK(sengetoy.price)} ${sengetoy.unit}</label>
       <input type="number" id="sengetoysett" min="0" step="1" value="${state.extras.sengetoysett}">
-    </div>
-    <div class="wizard-field">
-      <label for="vask-av-sengetoy">Vask av sengetøy – ${formatNOK(PRICING.extras.vaskAvSengetoy.price)} per stk</label>
-      <input type="number" id="vask-av-sengetoy" min="0" step="1" value="${state.extras.vaskAvSengetoy}">
+      <p class="wizard-note">${sengetoy.description}</p>
     </div>
     <label class="checkbox-field">
-      <input type="checkbox" id="starter-pack" ${state.extras.starterPack ? 'checked' : ''}>
-      Starter pack – ${formatNOK(PRICING.extras.starterPack.price)}
+      <input type="checkbox" id="forbrukspakke" ${state.extras.forbrukspakke ? 'checked' : ''}>
+      ${forbruk.label} – ${formatNOK(forbruk.price)} ${forbruk.unit}
     </label>
-    ${
-      state.needs.flyttehjelp
-        ? `
-      <div class="wizard-field">
-        <label for="flyttehjelp-hours">Flyttehjelp – ${formatNOK(PRICING.flyttehjelp.hourlyRate)}/t</label>
-        <input type="number" id="flyttehjelp-hours" min="0" step="1" value="${state.extras.flyttehjelpHours}">
-        ${
-          state.needs.rengjoring && state.cleaning.type === 'grundig'
-            ? '<p class="wizard-note">10 % rabatt gjelder siden Grundig vask er valgt samtidig.</p>'
-            : ''
-        }
-      </div>
-    `
-        : ''
-    }
+    <p class="wizard-note">${forbruk.description}</p>
     <div class="wizard-nav">
       <button type="button" class="btn btn-secondary" data-prev>Tilbake</button>
       <button type="button" class="btn btn-tertiary" data-skip>Hopp over</button>
@@ -477,18 +474,9 @@ function renderExtrasScreen(container, state, { next, prev }) {
   container.querySelector('#sengetoysett').addEventListener('input', (e) => {
     state.extras.sengetoysett = Math.max(0, Number(e.target.value) || 0);
   });
-  container.querySelector('#vask-av-sengetoy').addEventListener('input', (e) => {
-    state.extras.vaskAvSengetoy = Math.max(0, Number(e.target.value) || 0);
+  container.querySelector('#forbrukspakke').addEventListener('change', (e) => {
+    state.extras.forbrukspakke = e.target.checked;
   });
-  container.querySelector('#starter-pack').addEventListener('change', (e) => {
-    state.extras.starterPack = e.target.checked;
-  });
-  const hoursInput = container.querySelector('#flyttehjelp-hours');
-  if (hoursInput) {
-    hoursInput.addEventListener('input', (e) => {
-      state.extras.flyttehjelpHours = Math.max(0, Number(e.target.value) || 0);
-    });
-  }
 
   container.querySelector('[data-prev]').addEventListener('click', prev);
   container.querySelector('[data-skip]').addEventListener('click', next);
@@ -496,9 +484,9 @@ function renderExtrasScreen(container, state, { next, prev }) {
 }
 
 function renderSummaryScreen(container, state, { prev }) {
-  const onlyDodsbo =
-    state.needs.dodsbo && !state.needs.rengjoring && !state.needs.vindusvask && !state.needs.flyttehjelp;
+  const onlyDodsbo = state.needs.dodsbo && !state.needs.rengjoring && !state.needs.vindusvask;
   const { lines, total } = computeLines(state);
+  const priced = lines.some((line) => line.amount != null);
 
   container.innerHTML = `
     <h2>Oppsummering og kontaktinfo</h2>
@@ -518,11 +506,19 @@ function renderSummaryScreen(container, state, { prev }) {
           )
           .join('')}
       </ul>
-      <p class="summary-total"><span>Sum</span><strong>${formatNOK(total)}</strong></p>
+      ${priced ? `<p class="summary-total"><span>Sum</span><strong>${formatNOK(total)}</strong></p>` : ''}
     `
     }
     <p class="disclaimer">${DISCLAIMER}</p>
-    <form data-contact-form novalidate>
+    <form name="${FORM_NAME}" method="POST" data-netlify="true"
+          netlify-honeypot="bot-field" data-quote-form>
+      <input type="hidden" name="form-name" value="${FORM_NAME}">
+      <p hidden><label>La stå tom <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <input type="hidden" name="tjeneste" data-field="tjeneste">
+      <input type="hidden" name="areal" data-field="areal">
+      <input type="hidden" name="vindusvask" data-field="vindusvask">
+      <input type="hidden" name="tillegg" data-field="tillegg">
+      <input type="hidden" name="anslag" data-field="anslag">
       <div class="form-field">
         <label for="contact-name">Navn</label>
         <input type="text" id="contact-name" name="name" required autocomplete="name">
@@ -544,21 +540,56 @@ function renderSummaryScreen(container, state, { prev }) {
         Jeg samtykker til at Sirdal Renhold AS lagrer opplysningene mine for å ta kontakt, se
         <a href="/personvern.html">personvernerklæringen</a>.
       </label>
+      <p class="wizard-hint" data-form-error hidden></p>
       <div class="wizard-nav">
         <button type="button" class="btn btn-secondary" data-prev>Tilbake</button>
-        <button type="submit" class="btn btn-primary">Send</button>
+        <button type="submit" class="btn btn-primary">Send forespørsel</button>
       </div>
     </form>
   `;
 
   container.querySelector('[data-prev]').addEventListener('click', prev);
 
-  const form = container.querySelector('[data-contact-form]');
-  form.addEventListener('submit', (event) => {
+  const form = container.querySelector('[data-quote-form]');
+  const errorEl = container.querySelector('[data-form-error]');
+
+  // Carry the quote itself into the submission, so the lead in Netlify and
+  // the confirmation e-mail both show what the customer actually chose.
+  const summary = summariseForForm(state);
+  Object.entries(summary).forEach(([key, value]) => {
+    const field = form.querySelector(`[data-field="${key}"]`);
+    if (field) field.value = value;
+  });
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    // TODO: faza 3 - send skjemadata til backend (f.eks. en Netlify
-    // Function) og utløs en bekreftelses-e-post. Inntil videre bare
-    // omdirigerer vi til takkesiden.
-    window.location.href = '/takk.html';
+
+    // The wizard form is built by JavaScript, so the browser's own
+    // validation UI is all we have here — reportValidity triggers it.
+    if (!form.reportValidity()) return;
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    errorEl.hidden = true;
+
+    try {
+      // Netlify accepts form posts at any path on the site as long as
+      // form-name matches a form it registered at build time — that is the
+      // hidden static copy in priser.html.
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+
+      if (!response.ok) throw new Error(`Netlify Forms returned ${response.status}`);
+      window.location.href = '/takk.html';
+    } catch (err) {
+      console.error('[wizard] submission failed', err);
+      submitBtn.disabled = false;
+      errorEl.hidden = false;
+      errorEl.textContent =
+        'Vi fikk ikke sendt forespørselen. Prøv igjen, eller ring oss på 462 15 212.';
+    }
   });
 }
