@@ -857,6 +857,21 @@ input[type='range'] {
   transition: border-color 0.18s ease;
 }
 
+/* The rule above is meant for text fields, but it also matches the radios
+   and checkboxes nested inside .chip and .checkbox-field — a 100%-wide
+   radio stretches its row and pushes the label onto the line below it.
+   Checkboxes and radios never want the text-input treatment. */
+.form-field input[type='checkbox'],
+.form-field input[type='radio'],
+.wizard-field input[type='checkbox'],
+.wizard-field input[type='radio'] {
+  width: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  flex-shrink: 0;
+}
+
 .form-field input:hover,
 .form-field textarea:hover,
 .form-field select:hover {
