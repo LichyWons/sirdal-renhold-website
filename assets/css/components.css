@@ -572,11 +572,25 @@ body.nav-open {
   line-height: 1.5;
 }
 
+/* margin-top: auto pins the price to the bottom of the card. The grid
+   already stretches all three cards to equal height, but the variant
+   descriptions wrap to different line counts, so without this the prices
+   sit at three different heights and the row reads as misaligned. */
 .variant-price {
+  margin-top: auto;
+  padding-top: var(--space-3);
   font-weight: var(--weight-semibold);
   color: var(--ink-900);
   font-size: var(--fs-lg);
   letter-spacing: var(--tracking-heading);
+}
+
+/* The radio itself is hidden, so focus has nothing to land on visibly.
+   Without this the whole step is unusable from the keyboard. */
+.variant-card:has(input:focus-visible),
+.option-card:has(input:focus-visible) {
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
 }
 
 /* Recommended state is carried by the badge, not by a cyan border —
